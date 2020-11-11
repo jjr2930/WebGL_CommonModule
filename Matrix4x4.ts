@@ -1,4 +1,5 @@
 ﻿import { MathUtils } from "./MathUtils.js"
+import { Vector3 } from "./Vector3.js";
 export class Matrix4x4 
 {
     public readonly ROW: number = 4;
@@ -151,6 +152,23 @@ export class Matrix4x4
         this.m[15] = a41 * b14 + a42 * b24 + a43 * b34 + a44 * b44;
     }
 
+    //https://www.geertarien.com/blog/2017/07/30/breakdown-of-the-lookAt-function-in-OpenGL/
+    public SetViewMatrix(eye: Vector3, at: Vector3, up: Vector3): void
+    {
+        //eye : position
+        //at : targetPosition
+        //up : upvector;
+
+        const zAxis = Vector3.Sub(at, eye).Normalized();
+        const xAxis = Vector3.Cross(zAxis, up).Normalized();
+        const yAxis = Vector3.Cross(xAxis, zAxis);
+
+        
+        this.SetIdentity();
+        this.m[0] = xAxis.X; this.m[4] = yAxis.X; this.m[8] = zAxis.X;
+        this.m[1] = xAxis.Y; this.m[5] = yAxis.Y; this.m[9] = zAxis.Y;
+        this.m[2] = xAxis.Z; this.m[6] = yAxis.Z; this.m[10] = zAxis.Z;
+    };
 
     public SetPerspectiveMatrix(
         left: number,

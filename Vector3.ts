@@ -1,8 +1,8 @@
 ﻿export class Vector3
 {
-    x: number;
-    y: number;
-    z: number;
+    private x: number;
+    private y: number;
+    private z: number;
 
 
     get X(): number { return this.x; }
@@ -13,6 +13,21 @@
 
     get Z(): number { return this.z; }
     set Z(v: number) { this.z = v; }
+
+    constructor(origin: Vector3)
+    {
+        if (null === origin)
+        {
+            this.x = 0;
+            this.y = 0;
+            this.z = 0;
+            return;
+        }
+
+        this.x = origin.x;
+        this.y = origin.y;
+        this.z = origin.z;
+    }
 
     AddScalar(scalar: number): void
     {

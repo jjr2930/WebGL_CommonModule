@@ -37,12 +37,12 @@ export class Quaternion
     public FromEuler(euler: Vector3)
     {
         // Abbreviations for the various angular functions
-        const cy = Math.cos(euler.y * 0.5); // 0: 1
-        const sy = Math.sin(euler.y * 0.5); // 0: 0
-        const cp = Math.cos(euler.z * 0.5); // 0: 1
-        const sp = Math.sin(euler.z * 0.5); // 0: 0
-        const cr = Math.cos(euler.x * 0.5); // 0: 1
-        const sr = Math.sin(euler.x * 0.5); // 0: 0
+        const cy = Math.cos(euler.Y * 0.5); // 0: 1
+        const sy = Math.sin(euler.Y * 0.5); // 0: 0
+        const cp = Math.cos(euler.Z * 0.5); // 0: 1
+        const sp = Math.sin(euler.Z * 0.5); // 0: 0
+        const cr = Math.cos(euler.X * 0.5); // 0: 1
+        const sr = Math.sin(euler.X * 0.5); // 0: 0
 
         let res: Quaternion;
         res.w = cr * cp * cy + sr * sp * sy;
