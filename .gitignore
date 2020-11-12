@@ -1,3 +1,11 @@
 /bin
 /obj
 /packages
+/MathUtils.js
+/MathUtils.js.map
+/Matrix4x4.js
+/Matrix4x4.js.map
+/Quaternion.js
+/Quaternion.js.map
+/Vector3.js
+/Vector3.js.map
