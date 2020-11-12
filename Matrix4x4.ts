@@ -20,6 +20,15 @@ export class Matrix4x4
         }
     }
 
+    public GetArray(): number[]
+    {
+        const result = new Array<number>();
+        for (let i = 0; i < this.SIZE; ++i)
+            result.push(this.m[i]);
+
+        return result;
+    }
+
     public SetData1D(value: number, index: number): void
     {
         this.m[index] = value;
@@ -45,7 +54,7 @@ export class Matrix4x4
 
     public TranslateXYZ(x: number, y: number, z: number): void
     {
-        this.SetIdentity();
+        //this.SetIdentity();
         this.m[3] = x;
         this.m[7] = y;
         this.m[11] = z;
@@ -53,22 +62,22 @@ export class Matrix4x4
 
     public ScaleXYZ(x: number, y: number, z: number): void
     {
-        this.SetIdentity();
+        //this.SetIdentity();
         this.m[0] = x;
         this.m[5] = y;
         this.m[10] = z;
     }
 
     // Based on http://www.gamedev.net/reference/articles/article1199.asp
-    public RotateAxis(angle: number, axis: number[]): void
+    public RotateAxis(angle: number, axis: Vector3): void
     {
         const radAngle = angle * MathUtils.DEG2RAD;
         const c = Math.cos(radAngle);
         const s = Math.sin(radAngle);
         const t = 1 - c;
-        const x = axis[0];
-        const y = axis[1];
-        const z = axis[2];
+        const x = axis.X;
+        const y = axis.Y;
+        const z = axis.Z;
         const tx = t * x;
         const ty = t * y;
 
@@ -191,7 +200,7 @@ export class Matrix4x4
         this.m[0] = x; this.m[4] = 0; this.m[8] = aa; this.m[12] = 0;
         this.m[1] = 0; this.m[5] = y; this.m[9] = bb; this.m[13] = 0;
         this.m[2] = 0; this.m[6] = 0; this.m[10] = cc; this.m[14] = dd;
-        this.m[3] = 0; this.m[7] = 0; this.m[11] = 0; this.m[15] = 0;
+        this.m[3] = 0; this.m[7] = 0; this.m[11] = -1; this.m[15] = 0;
     }
 
     public SetOrthographicMatrix(
@@ -226,12 +235,12 @@ export class Matrix4x4
         near: number,
         far: number): [number, number, number, number, number, number]
     {
-        let l: number;
-        let r: number;
-        let t: number;
-        let b: number;
-        let n: number;
-        let f: number;
+        let l = left;
+        let r = right;
+        let t = top;
+        let b = bottom;
+        let n = near;
+        let f = far;
 
         if (MathUtils.IsSame(left, right))
         {

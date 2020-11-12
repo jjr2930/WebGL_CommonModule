@@ -29,6 +29,13 @@
         this.z = origin.z;
     }
 
+    Set(_x: number, _y: number, _z: number)
+    {
+        this.x = _x;
+        this.y = _y;
+        this.z = _z;
+    }
+
     AddScalar(scalar: number): void
     {
         this.x += scalar;
@@ -89,7 +96,7 @@
 
     Normalized(): Vector3
     {
-        let result: Vector3;
+        const result = new Vector3(null);
         result.x = this.x;
         result.y = this.y;
         result.z = this.z;
@@ -112,7 +119,7 @@
 
     static Cross(v1: Vector3, v2: Vector3): Vector3
     {
-        let result: Vector3;
+        const result = new Vector3(null);
         const x = v1.y * v2.z - v1.z * v2.y;
         const y = v1.z * v2.x - v1.x * v2.z;
         const z = v1.x * v2.y - v1.y * v2.x;
@@ -136,7 +143,7 @@
 
     static Add(v1: Vector3, v2: Vector3): Vector3
     {
-        let result: Vector3;
+        const result = new Vector3(null);
         result.x += v1.x + v2.x;
         result.y += v1.y + v2.y;
         result.z += v1.z + v2.z;
@@ -146,11 +153,35 @@
 
     static Sub(v1: Vector3, v2: Vector3): Vector3
     {
-        let result: Vector3;
+        const result =new Vector3(null);
         result.x = v1.x - v2.x;
         result.y = v1.y - v2.y;
         result.z = v1.z - v2.z;
 
+        return result;
+    }
+
+    static get Zero(): Vector3
+    {
+        const result = new Vector3(null);
+        result.x = 0;
+        result.y = 0;
+        result.z = 0;
+
+        return result;
+    }
+
+    static get Up(): Vector3
+    {
+        const result = new Vector3(null);
+        result.Set(0, 1, 0);
+        return result;
+    }
+
+    static get Right(): Vector3
+    {
+        const result = new Vector3(null);
+        result.Set(1, 0, 0);
         return result;
     }
 }
