@@ -164,22 +164,27 @@ export class Matrix4x4
     //https://www.geertarien.com/blog/2017/07/30/breakdown-of-the-lookAt-function-in-OpenGL/
     public SetViewMatrix(eye: Vector3, at: Vector3, up: Vector3): void
     {
-        //eye : position
-        //at : targetPosition
-        //up : upvector;
-
         const zAxis = Vector3.Sub(at, eye).Normalized();
         const xAxis = Vector3.Cross(zAxis, up).Normalized();
         const yAxis = Vector3.Cross(xAxis, zAxis);
 
-        
+
         this.SetIdentity();
         this.m[0] = xAxis.X; this.m[4] = yAxis.X; this.m[8] = zAxis.X;
         this.m[1] = xAxis.Y; this.m[5] = yAxis.Y; this.m[9] = zAxis.Y;
         this.m[2] = xAxis.Z; this.m[6] = yAxis.Z; this.m[10] = zAxis.Z;
     };
+    public SetPerspectiveMatrix(fov: number, aspect: number, near: number, far: number)
+    {
+        const top = Math.tan(fov * 0.5 * MathUtils.DEG2RAD) * near;
+        const bottom = -top;
+        const right = top * aspect;
+        const left = -right;
 
-    public SetPerspectiveMatrix(
+        this.SetFrustrumMatrix(left, right, top, bottom, near, far)
+    }
+
+    public SetFrustrumMatrix(
         left: number,
         right: number,
         top: number,
@@ -280,6 +285,16 @@ export class Matrix4x4
         return [l, r, t, b, n, f];
     }
 
+    public Transepose(): void
+    {
+        const _m = this.m;
+        const r = new Matrix4x4();
+
+        r.m[0] = _m[0]; r.m[4] = _m[1]; r.m[8] = _m[2]; r.m[12] = _m[3];
+        r.m[1] = _m[4]; r.m[5] = _m[5]; r.m[9] = _m[6]; r.m[13] = _m[7];
+        r.m[2] = _m[8]; r.m[6] = _m[9]; r.m[10] = _m[10]; r.m[14] = _m[11];
+        r.m[3] = _m[12]; r.m[7] = _m[13]; r.m[11] = _m[14]; r.m[15] = _m[15];
+    }
     public ToString(): string
     {
         let res = "";

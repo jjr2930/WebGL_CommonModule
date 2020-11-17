@@ -104,6 +104,11 @@
         result.Normalize();
         return result;
     }
+
+    ToArray(): number[]
+    {
+        return [this.x, this.y, this.z];
+    }
     /*
      * static functions
      */
