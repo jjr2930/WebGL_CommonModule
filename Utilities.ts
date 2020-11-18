@@ -66,9 +66,6 @@
 
     public static CreateIndexBufferU16(
         gl: WebGLRenderingContext,
-        program: WebGLProgram,
-        attributeName: string,
-        elementCount: number,
         sources: number[]): WebGLBuffer
     {
         const indexBuffer = gl.createBuffer();
@@ -79,14 +76,32 @@
 
     public static CreateIndexBufferU32(
         gl: WebGLRenderingContext,
-        program: WebGLProgram,
-        attributeName: string,
-        elementCount: number,
         sources: number[]): WebGLBuffer
     {
         const indexBuffer = gl.createBuffer();
         gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, indexBuffer);
         gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, new Uint32Array(sources), gl.STATIC_DRAW);
         return indexBuffer
+    }
+
+    public static async LoadTexture(gl: WebGLRenderingContext, path: string): Promise<WebGLTexture>
+    {
+        return new Promise((resolve, reject) =>
+        {
+            const img = new Image();
+            img.onload = () =>
+            {
+                const cubeTexture = gl.createTexture();
+                gl.bindTexture(gl.TEXTURE_2D, cubeTexture);
+                gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, img);
+                gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+                gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR_MIPMAP_NEAREST);
+                gl.generateMipmap(gl.TEXTURE_2D);
+                gl.bindTexture(gl.TEXTURE_2D, null);
+                resolve(cubeTexture);
+            }
+            img.onerror = reject;
+            img.src = path;
+        });
     }
 }

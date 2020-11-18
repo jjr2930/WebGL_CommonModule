@@ -170,9 +170,9 @@ export class Matrix4x4
 
 
         this.SetIdentity();
-        this.m[0] = xAxis.X; this.m[4] = yAxis.X; this.m[8] = zAxis.X;
-        this.m[1] = xAxis.Y; this.m[5] = yAxis.Y; this.m[9] = zAxis.Y;
-        this.m[2] = xAxis.Z; this.m[6] = yAxis.Z; this.m[10] = zAxis.Z;
+        this.m[0] = xAxis.X; this.m[4] = yAxis.X; this.m[8] = zAxis.X; this.m[12] = eye.X;
+        this.m[1] = xAxis.Y; this.m[5] = yAxis.Y; this.m[9] = zAxis.Y; this.m[13] = eye.Y;
+        this.m[2] = xAxis.Z; this.m[6] = yAxis.Z; this.m[10] = zAxis.Z; this.m[14] = eye.Z;
     };
     public SetPerspectiveMatrix(fov: number, aspect: number, near: number, far: number)
     {
@@ -284,7 +284,16 @@ export class Matrix4x4
 
         return [l, r, t, b, n, f];
     }
-
+    public Set(m0: number, m4: number, m8: number, m12: number,
+        m1: number, m5: number, m9: number, m13: number,
+        m2: number, m6: number, m10: number, m14: number,
+        m3: number, m7: number, m11: number, m15: number)
+    {
+        this.m[0] = m0; this.m[4] = m4; this.m[8] = m8; this.m[12] = m12;
+        this.m[1] = m1; this.m[5] = m5; this.m[9] = m9; this.m[13] = m13;
+        this.m[2] = m2; this.m[6] = m6; this.m[10] = m10; this.m[14] = m14;
+        this.m[3] = m3; this.m[7] = m7; this.m[11] = m11; this.m[15] = m15;
+    }
     public Transepose(): void
     {
         const _m = this.m;
