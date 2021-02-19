@@ -110,6 +110,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <TypeScriptCompile Include="Color.ts" />
     <TypeScriptCompile Include="MathUtils.ts" />
     <TypeScriptCompile Include="Matrix4x4.ts" />
     <TypeScriptCompile Include="Quaternion.ts" />

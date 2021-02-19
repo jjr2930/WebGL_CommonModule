@@ -14,7 +14,7 @@
     get Z(): number { return this.z; }
     set Z(v: number) { this.z = v; }
 
-    constructor(origin: Vector3)
+    constructor(origin: Vector3 = null)
     {
         if (null === origin)
         {

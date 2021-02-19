@@ -84,7 +84,10 @@
         return indexBuffer
     }
 
-    public static async LoadTexture(gl: WebGLRenderingContext, path: string): Promise<WebGLTexture>
+    public static async LoadTexture(gl: WebGLRenderingContext,
+        program: WebGLProgram,
+        uniformName: string,
+        path: string): Promise<void>
     {
         return new Promise((resolve, reject) =>
         {
@@ -97,8 +100,11 @@
                 gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
                 gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR_MIPMAP_NEAREST);
                 gl.generateMipmap(gl.TEXTURE_2D);
-                gl.bindTexture(gl.TEXTURE_2D, null);
-                resolve(cubeTexture);
+                gl.activeTexture(gl.TEXTURE0);
+                gl.bindTexture(gl.TEXTURE_2D, cubeTexture);
+                gl.uniform1i(gl.getUniformLocation(program, uniformName), 0);
+
+                resolve();
             }
             img.onerror = reject;
             img.src = path;
