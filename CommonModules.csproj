@@ -113,6 +113,7 @@
     <TypeScriptCompile Include="Color.ts" />
     <TypeScriptCompile Include="MathUtils.ts" />
     <TypeScriptCompile Include="Matrix4x4.ts" />
+    <TypeScriptCompile Include="Primitive\Shape.ts" />
     <TypeScriptCompile Include="Quaternion.ts" />
     <TypeScriptCompile Include="Utilities.ts" />
     <TypeScriptCompile Include="Vector3.ts" />
